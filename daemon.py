@@ -144,7 +144,7 @@ def main(*args, **kwargs):
                 tweet = " ".join([msg, stats(pstat), "-", URL.format(new_match)])
                 log("Posting {}".format(tweet))
                 
-                api.status_update(tweet)
+                api.update_status(tweet)
 
                 # Write to local cache
                 with open(".last_match", "w") as f:
