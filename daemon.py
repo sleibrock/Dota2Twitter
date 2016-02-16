@@ -11,7 +11,7 @@ from tweepy import API, OAuthHandler
 from D2T.Match import *
 from D2T.Player import *
 
-sleepy_time = 216000
+sleepy_time = 3600 
 
 # Messages for winning
 win_msgs = [
