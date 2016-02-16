@@ -54,12 +54,8 @@ def main(*args, **kwargs):
     6. Pulls the match ID to update to Twitter
     7. Analyzes it and makes a snobbish post to Twitter
     '''
-    
-
-
     # Read in a configuration file from sys.argv
     try:
-        print(argv)
         conf = jload(open(argv.pop(), 'r')) 
     except Exception as e:
         print(str(e))
