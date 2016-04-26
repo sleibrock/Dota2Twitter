@@ -26,22 +26,24 @@ fail_msgs = [
     "Game is hard",
     "I immediately regret my decision",
     "я потерял гг",
+    " ¯\_(ツ)_/¯",
 ]
 
 URL = "http://www.dotabuff.com/matches/{0}"
-
-def log(msg):
-    '''
-    Log a message with the current unix time
-    '''
-    print("[{}] {}".format(int(time()), msg))
 
 def stats(pstat):
     '''
     Quickly format a PStat into a string for tweets
     '''
     return "(kda:{0} gpm:{1})".format(pstat.kda, pstat.gpm)
-    pass
+
+def create_logger(enable_logging=False):
+    '''
+    Create a logging method based on logging being enabled or not
+    '''
+    if enable_logging:
+        return lambda msg: print("[{}] {}".format(int(time()), msg)) 
+    return lambda x: None
 
 def main(*args, **kwargs):
     '''
@@ -56,18 +58,12 @@ def main(*args, **kwargs):
     '''
     # Read in a configuration file from sys.argv
     try:
-        conf = jload(open(argv.pop(), 'r')) 
+        conf = jload(open(argv[1], 'r')) 
     except Exception as e:
         print(str(e))
         print("Invalid or no configuration supplied")
         print("Command: D2T-Daemon JSON_CONF_FILE")
         quit()
-
-    # Print out the keys
-    '''
-    for i, k in conf.items():
-        print("{} -> {}".format(i, k))
-    '''
 
     # Create the Twitter Oauth instance
     try:
@@ -78,6 +74,9 @@ def main(*args, **kwargs):
         print(str(e))
         print("Failed to create Twitter connection")
         quit()
+
+    # create the logging instance
+    log = create_logger("-d" in argv or "--debug" in argv)
        
     # Begin while loop to infinity
     my_pid = conf["player_id"]
@@ -103,7 +102,7 @@ def main(*args, **kwargs):
             if last_match == 0 or last_match is None:
                 new_match = player.matches[-1]
             else:
-                if last_match == player.matches[0]:
+                if last_match = ¯\_(ツ)_/¯= player.matches[0]:
                     log("No new matches")
                     already_done = True
                 else:
@@ -117,7 +116,7 @@ def main(*args, **kwargs):
                     new_match = checked_match
 
             if not already_done:
-                log("Getting match {}...".format(new_match))
+                log("Getting  ¯\_(ツ)_/¯match {}...".format(new_match))
                 match = get_match(new_match)
 
                 radi_stats  = [p for p in match.radiant if p.id == my_pid]
@@ -154,7 +153,7 @@ def main(*args, **kwargs):
     except KeyboardInterrupt:
         print("\nLeaving")
     finally:
-        log("Done")
+        log("Exiting Daemon")
 
 if __name__ == "__main__":
     main()
