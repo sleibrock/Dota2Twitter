@@ -102,7 +102,7 @@ def main(*args, **kwargs):
             if last_match == 0 or last_match is None:
                 new_match = player.matches[-1]
             else:
-                if last_match = ¯\_(ツ)_/¯= player.matches[0]:
+                if last_match == player.matches[0]:
                     log("No new matches")
                     already_done = True
                 else:
@@ -116,7 +116,7 @@ def main(*args, **kwargs):
                     new_match = checked_match
 
             if not already_done:
-                log("Getting  ¯\_(ツ)_/¯match {}...".format(new_match))
+                log("Getting match {}...".format(new_match))
                 match = get_match(new_match)
 
                 radi_stats  = [p for p in match.radiant if p.id == my_pid]
