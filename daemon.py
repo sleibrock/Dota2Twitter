@@ -42,7 +42,8 @@ def create_logger(enable_logging=False):
     Create a logging method based on logging being enabled or not
     '''
     if enable_logging:
-        return lambda msg: print("[{}] {}".format(int(time()), msg)) 
+        def log(msg):
+            print("[{}] {}".format(int(time()), msg)) 
     return lambda x: None
 
 def main(*args, **kwargs):
