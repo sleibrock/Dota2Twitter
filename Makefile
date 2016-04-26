@@ -8,4 +8,8 @@ test:
 	nosetests
 py3:
 	python3 daemon.py conf.json
+py3setup:
+	pip3 install -r requirements.txt
+	cp res/conf.json conf.json
+	echo "Please edit conf.json with your Twitter and Dota details"
 
