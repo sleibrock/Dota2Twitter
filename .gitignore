@@ -1,3 +1,4 @@
+*.py[cod]
 env/
 *.swp
 __pycache__/
