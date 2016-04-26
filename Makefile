@@ -6,3 +6,6 @@ setup:
 	echo "Please edit conf.json with your Twitter and Dota details"
 test:
 	nosetests
+py3:
+	python3 daemon.py conf.json
+
