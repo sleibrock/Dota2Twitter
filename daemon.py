@@ -157,5 +157,9 @@ def main(*args, **kwargs):
         log("Exiting Daemon")
 
 if __name__ == "__main__":
-    main()
+    try:
+        while True:
+            main()
+    except KeyboardInterrupt:
+        print("Keyboard Interrupt, quitting")
 # end
