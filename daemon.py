@@ -44,6 +44,8 @@ def create_logger(enable_logging=False):
     if enable_logging:
         def log(msg):
             print("[{}] {}".format(int(time()), msg)) 
+        log("Logger created")
+        return log
     return lambda x: None
 
 def main(*args, **kwargs):
