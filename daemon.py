@@ -153,8 +153,6 @@ def main(*args, **kwargs):
     except Exception as e:
         print("Something went completely wrong")
         print(e)
-    except KeyboardInterrupt:
-        print("\nLeaving")
     finally:
         log("Exiting Daemon")
 
