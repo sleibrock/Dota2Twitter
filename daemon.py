@@ -11,6 +11,7 @@ from tweepy import API, OAuthHandler
 from D2T.Match import *
 from D2T.Player import *
 
+# Time for the Daemon to sleep between each check
 sleepy_time = 3600 
 
 # Messages for winning
@@ -18,6 +19,7 @@ win_msgs = [
     "Won with {}",
     "{} victory",
     "ez {} game",
+    "Sick {} game",
 ]
 
 # Messages for when you lose
@@ -27,8 +29,10 @@ fail_msgs = [
     "I immediately regret my decision",
     "я потерял гг",
     " ¯\_(ツ)_/¯",
+    "We Needed Wards",
 ]
 
+# Source URL to load for match data
 URL = "http://www.dotabuff.com/matches/{0}"
 
 def stats(pstat):
@@ -40,6 +44,8 @@ def stats(pstat):
 def create_logger(enable_logging=False):
     '''
     Create a logging method based on logging being enabled or not
+    True:  returns a function that prints input and times it
+    False: returns a function that accepts an input and eats it
     '''
     if enable_logging:
         def log(msg):
@@ -87,6 +93,7 @@ def main(*args, **kwargs):
         log("Beginning daemon...")
         while True:
             # Open up local cache to see what the last match was
+            # If unable to parse the last match, set to 0 and proceed
             try:
                 with open(".last_match", "r") as f:
                     contents = f.read()
@@ -133,15 +140,16 @@ def main(*args, **kwargs):
                     my_team = "Dire"
                     pstat   = dire_stats.pop()
 
-                # Finally...
+                # Finally... determine if you won or lost
                 if my_team == match.victor:
                     msg = choice(win_msgs).format(pstat.hero)
                 else:
                     msg = choice(fail_msgs).format(pstat.hero)
 
+                # Format the tweet to look like {win/loss msg, kda, -, <url>}
                 tweet = " ".join([msg, stats(pstat), "-", URL.format(new_match)])
                 log("Posting {}".format(tweet))
-                
+
                 api.update_status(tweet)
 
                 # Write to local cache
@@ -153,8 +161,6 @@ def main(*args, **kwargs):
     except Exception as e:
         print("Something went completely wrong")
         print(e)
-    finally:
-        log("Exiting Daemon")
 
 if __name__ == "__main__":
     try:

@@ -35,10 +35,11 @@ information, as well as your public Dota 2 Steam ID.
 
 After that, to run the daemon
 ```
-make
+make run
 ```
 
-Then sit back and watch all your favorites/retweets pile up, bro.
+After that the client runs on it's own. You can fork it as well, or use
+a screen multiplexer such as GNU Screen or Tmux.
 
 # How do I allow this to access my Twitter?
 
@@ -52,18 +53,31 @@ You need to enable public match sharing so your name will come up in the
 Dota 2 JSON API. After that you can find your ID somewhere in the game's client, 
 or you can log in through Steam on Dotabuff and find your profile directly.
 
-# Why does this stupid thing take so long to update?
+# Why does this take so long to update?
 
-Hold on there buddy, these services are free, but that doesn't mean we 
-have to spam thousands of requests within a couple of seconds. That's an 
-easy way to get IP banned.
+Since Dotabuff is a free resource, it's best if we didn't spam it for
+requests every two seconds. Dota matches typically last anywhere from
+40 minutes to an hour, so the update is set to look up for new matches
+every hour.
 
-The average game of Dota lasts about forty minutes. The daemon will 
-look once every hour for a Player's profile, scan if there's a new match 
-(based on previous match checks), and then post it to Twitter. This program 
-will NOT post every game in your history, nor will it ever because no one 
-cares about games from two years ago. It only cares about what's new, 
-while the daemon is running.
+Plus if we continuously spammed Dotabuff, that's a good way to get
+IP rate-limited by the site itself (if it doesn't already have
+CloudFlare DOS protection). Let's just keep it nice and friendly.
+
+# What's the inspiration behind this?
+
+Simply because I couldn't find anything else that automatically posted
+Dota 2 API info every time a match was completed. Within Dota 2 there
+exists a kind of "Twitter" application but that data is only relevant
+inside the client.
+
+The Dota 2 API outputs a large feed of games completed, and even finding
+one specific game that a player had played in that chunk would be astronomically
+impossible without some kind of database. Services like Yasp and Dotabuff
+graciously host all that info for us, so why not just simply carry that information
+over to another website?
+
+This is just designed as a fun little project.
 
 # Credits
 
